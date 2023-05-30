@@ -1,4 +1,4 @@
 export enum ROUTE_NAME {
-	HOME = 'HOME',
-	DETAILS = 'DETAILS'
+  HOME = 'HOME',
+  DETAILS = 'DETAILS'
 }
