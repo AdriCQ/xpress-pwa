@@ -21,7 +21,7 @@ const AgencySlider = defineAsyncComponent(() => import('@/components/slider/Agen
 
 	</main>
 
-	<div class="fixed bottom-0 w-full p-2">
+	<div class="fixed bottom-0 w-full p-2 z-10 bg-white">
 		<AgencySlider />
 	</div>
 </template>

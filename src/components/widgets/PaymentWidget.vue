@@ -8,7 +8,7 @@ const CheckIcon = defineAsyncComponent(() => import('@/components/icons/CheckIco
 	<div class="flex gap-2 border-b-2 pb-2">
 		<!-- Icon -->
 		<div class="flex-none">
-			<CheckIcon />
+			<CheckIcon class="text-green-500 dark:text-green-400" />
 		</div>
 
 		<!-- Content -->
