@@ -5,6 +5,7 @@ import { getDateYearAndWeek } from '@/helpers'
 import { ROUTE_NAME } from '@/router'
 import { useStore } from '@/stores'
 import useService from '@/services'
+import type { ModelValue as FloatButtonModel } from '@/components/widgets/FloatButton.vue'
 
 const AgencySlider = defineAsyncComponent(() => import('@/components/slider/AgencySlider.vue'))
 const FloatButton = defineAsyncComponent(() => import('@/components/widgets/FloatButton.vue'))
@@ -18,8 +19,17 @@ const $store = useStore()
 const agencies = computed(() => $store.agencies)
 const cobranzas = computed(() => {
   let response = $store.cobranzas
+  if (!filterCheck.value.completed) {
+    response = response.filter((c) => c.status !== 'Completado')
+  }
+  if (!filterCheck.value.partial) {
+    response = response.filter((c) => c.status !== 'Parcial')
+  }
+  if (!filterCheck.value.pending) {
+    response = response.filter((c) => c.status !== 'Pendiente')
+  }
   if (searchForm.value) {
-    response = $store.cobranzas.filter(
+    response = response.filter(
       (cobranza) =>
         cobranza.nombre
           .toLocaleLowerCase()
@@ -28,6 +38,11 @@ const cobranzas = computed(() => {
     )
   }
   return response
+})
+const filterCheck = ref<FloatButtonModel>({
+  completed: true,
+  partial: true,
+  pending: true
 })
 const selectedAgency = computed(() => $store.selectedAgency)
 const searchForm = ref<string>()
@@ -39,6 +54,7 @@ function goToDetails() {
 }
 
 async function loadAgency() {
+  searchForm.value = undefined
   $store.cobranzas = []
   const { week, year } = getDateYearAndWeek()
   const resp = await $service.getCobranza({
@@ -64,7 +80,7 @@ async function loadAgency() {
     </div>
 
     <div class="fixed bottom-20 right-5 z-10">
-      <FloatButton />
+      <FloatButton v-model="filterCheck" />
     </div>
   </main>
 

@@ -1,20 +1,30 @@
 <script setup lang="ts">
-import { defineAsyncComponent } from 'vue'
+import { computed, defineAsyncComponent } from 'vue'
 import { toCurrency } from '@/helpers'
 import type { Cobranza } from '@/services'
 
-defineProps<{
+const $props = defineProps<{
   cobranza: Cobranza
 }>()
 
 const CheckIcon = defineAsyncComponent(() => import('@/components/icons/CheckIcon.vue'))
+const iconStyle = computed(() => {
+  switch ($props.cobranza.status) {
+    case 'Completado':
+      return 'text-green-500 dark:text-green-400'
+    case 'Parcial':
+      return 'text-amber-500 dark:text-amber-400'
+    default:
+      return 'text-red-500 dark:text-red-400'
+  }
+})
 </script>
 
 <template>
   <div class="flex gap-2 border-b-2 pb-2">
     <!-- Icon -->
     <div class="flex-none">
-      <CheckIcon class="text-green-500 dark:text-green-400" />
+      <CheckIcon :class="iconStyle" />
     </div>
 
     <!-- Content -->
