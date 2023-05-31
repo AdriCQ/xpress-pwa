@@ -1,20 +1,34 @@
 <script setup lang="ts">
 import { computed, defineAsyncComponent, ref } from 'vue'
-import { useRouter } from 'vue-router'
 import { getDateYearAndWeek } from '@/helpers'
-import { ROUTE_NAME } from '@/router'
 import { useStore } from '@/stores'
 import useService from '@/services'
 import type { ModelValue as FloatButtonModel } from '@/components/widgets/FloatButton.vue'
+/**
+ * -----------------------------------------
+ *	Components
+ * -----------------------------------------
+ */
 
 const AgencySlider = defineAsyncComponent(() => import('@/components/slider/AgencySlider.vue'))
 const FloatButton = defineAsyncComponent(() => import('@/components/widgets/FloatButton.vue'))
+const LoadSkeleton = defineAsyncComponent(() => import('@/components/widgets/LoadSkeleton.vue'))
 const PaymentWidget = defineAsyncComponent(() => import('@/components/widgets/PaymentWidget.vue'))
 const SearchForm = defineAsyncComponent(() => import('@/components/forms/SearchForm.vue'))
+/**
+ * -----------------------------------------
+ *	Helpers
+ * -----------------------------------------
+ */
 
-const $router = useRouter()
 const $service = useService()
 const $store = useStore()
+
+/**
+ * -----------------------------------------
+ *	data
+ * -----------------------------------------
+ */
 
 const agencies = computed(() => $store.agencies)
 const cobranzas = computed(() => {
@@ -44,16 +58,15 @@ const filterCheck = ref<FloatButtonModel>({
   partial: true,
   pending: true
 })
+const loading = ref<boolean>(false)
 const selectedAgency = computed(() => $store.selectedAgency)
 const searchForm = ref<string>()
 
-function goToDetails() {
-  $router.push({
-    name: ROUTE_NAME.DETAILS
-  })
-}
-
+/**
+ * loadAgency
+ */
 async function loadAgency() {
+  loading.value = true
   searchForm.value = undefined
   $store.cobranzas = []
   const { week, year } = getDateYearAndWeek()
@@ -63,14 +76,18 @@ async function loadAgency() {
     year
   })
   $store.cobranzas = resp.data.cobranza
+  loading.value = false
 }
 </script>
 
 <template>
   <main class="min-h-screen p-2">
-    <SearchForm v-model="searchForm" />
+    <div class="sticky top-0 z-10 w-full bg-white p-2">
+      <SearchForm v-model="searchForm" />
+    </div>
+    <LoadSkeleton :items="5" v-if="loading" class="mt-4 px-2" />
 
-    <div class="mt-4 px-2">
+    <div class="mt-4 px-2" v-else>
       <PaymentWidget
         v-for="(cobranza, key) in cobranzas"
         :key="`cobranza-${key}-${cobranza.prestamoId}`"
