@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { defineAsyncComponent } from 'vue'
+import { toCurrency } from '@/helpers'
 import type { Cobranza } from '@/services'
 
 defineProps<{
@@ -24,8 +25,8 @@ const CheckIcon = defineAsyncComponent(() => import('@/components/icons/CheckIco
 
     <!-- Icon -->
     <div class="flex-none text-sm">
-      <p class="font-extralight">$200.00</p>
-      <p class="font-bold">$200.00</p>
+      <p class="font-extralight">{{ toCurrency(cobranza.tarifa) }}</p>
+      <p class="font-bold">{{ toCurrency(cobranza.cobradoEnLaSemana) }}</p>
     </div>
   </div>
 </template>
