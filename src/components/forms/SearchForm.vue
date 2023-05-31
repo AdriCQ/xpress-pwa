@@ -1,13 +1,23 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const $emits = defineEmits<{ (e: 'update:model-value', v?: string): void }>()
+
+const search = ref<string>()
+
+function onSubmit() {
+  $emits('update:model-value', search.value)
+}
+</script>
 
 <template>
-  <form>
+  <form @submit.prevent="onSubmit">
     <label
       for="default-search"
       class="sr-only mb-2 text-sm font-medium text-gray-900 dark:text-white"
       >Search</label
     >
-    <div class="relative">
+    <div class="relative cursor-pointer" role="button" @click="onSubmit">
       <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
         <svg
           aria-hidden="true"
@@ -28,9 +38,9 @@
       <input
         type="search"
         id="default-search"
+        v-model="search"
         class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
         placeholder="Quick search for anything"
-        required
       />
     </div>
   </form>
