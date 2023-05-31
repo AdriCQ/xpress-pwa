@@ -8,38 +8,37 @@ import { useStore } from '@/stores'
 const { getAgencies, getCobranza } = useService()
 const $store = useStore()
 
-
 /**
  * preloadData
  */
 async function preloadData() {
-	try {
-		const agenciesResp = await getAgencies('Ger003')
-		$store.agencies = agenciesResp.data
-		$store.selectedAgency = $store.agencies[0]
+  try {
+    const agenciesResp = await getAgencies('Ger003')
+    $store.agencies = agenciesResp.data
+    $store.selectedAgency = $store.agencies[0]
 
-		const { week, year } = getDateYearAndWeek()
-		const cobranzaResp = await getCobranza({
-			agent: $store.selectedAgency,
-			week,
-			year
-		})
+    const { week, year } = getDateYearAndWeek()
+    const cobranzaResp = await getCobranza({
+      agent: $store.selectedAgency,
+      week,
+      year
+    })
 
-		$store.cobranzas = cobranzaResp.data.cobranza
-		console.log({
-			cobranzaResp,
-			agenciesResp
-		})
-	} catch (error) {
-		console.log({ preloadError: error })
-	}
+    $store.cobranzas = cobranzaResp.data.cobranza
+    console.log({
+      cobranzaResp,
+      agenciesResp
+    })
+  } catch (error) {
+    console.log({ preloadError: error })
+  }
 }
 
 onBeforeMount(async () => {
-	await preloadData()
+  await preloadData()
 })
 </script>
 
 <template>
-	<RouterView />
+  <RouterView />
 </template>

@@ -1,8 +1,14 @@
 <script lang="ts" setup>
-import { ROUTE_NAME } from '@/router'
+import { computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { ROUTE_NAME } from '@/router'
+import { useStore } from '@/stores'
 
 const $router = useRouter()
+
+const $store = useStore()
+
+const selectedCobranza = computed(() => $store.selectedCobranza)
 
 function goToHome() {
   void $router.push({
@@ -14,6 +20,7 @@ function goToHome() {
 <template>
   <main class="p-2">
     <div
+      v-if="selectedCobranza"
       class="block max-w-sm rounded-lg border border-gray-200 bg-white shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
     >
       <div class="border-b-[1px] px-6 pb-2 pt-6">
