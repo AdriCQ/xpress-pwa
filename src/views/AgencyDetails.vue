@@ -8,11 +8,11 @@ const $router = useRouter()
 
 const $store = useStore()
 
-const selectedCobranza = computed(() => $store.selectedCobranza)
+const cobranzaSelected = computed(() => $store.cobranzaSelected)
 
 function goToHome() {
   void $router.push({
-    name: ROUTE_NAME.HOME
+    name: ROUTE_NAME.DASHBOARD_HOME
   })
 }
 </script>
@@ -20,7 +20,7 @@ function goToHome() {
 <template>
   <main class="p-2">
     <div
-      v-if="selectedCobranza"
+      v-if="cobranzaSelected"
       class="block max-w-sm rounded-lg border border-gray-200 bg-white shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
     >
       <div class="border-b-[1px] px-6 pb-2 pt-6">

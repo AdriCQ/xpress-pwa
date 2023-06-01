@@ -11,6 +11,7 @@ const dropdownName = 'floating-dropdown'
 const $emit = defineEmits<{ (e: 'update:model-value', v: ModelValue): void }>()
 defineProps<{ modelValue: ModelValue }>()
 const DotsIcon = defineAsyncComponent(() => import('@/components/icons/DotsIcon.vue'))
+const InfoIcon = defineAsyncComponent(() => import('@/components/icons/InfoIcon.vue'))
 
 onMounted(() => {
   initDropdowns()
@@ -27,17 +28,18 @@ onMounted(() => {
         class="text-md py-2 text-gray-700 dark:text-gray-200"
         :aria-labelledby="`${dropdownName}-button`"
       >
-        <li>
+        <li
+          @click="
+            () =>
+              $emit('update:model-value', {
+                ...modelValue,
+                pending: !modelValue.pending
+              })
+          "
+        >
           <div class="flex items-center">
             <input
               :checked="modelValue.pending"
-              @change.prevent="
-                () =>
-                  $emit('update:model-value', {
-                    ...modelValue,
-                    pending: !modelValue.pending
-                  })
-              "
               type="checkbox"
               value=""
               class="h-4 w-4 rounded border-gray-300 bg-gray-100 text-red-600 focus:ring-2 focus:ring-red-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-red-600"
@@ -50,17 +52,18 @@ onMounted(() => {
           </div>
         </li>
 
-        <li>
+        <li
+          @click="
+            () =>
+              $emit('update:model-value', {
+                ...modelValue,
+                partial: !modelValue.partial
+              })
+          "
+        >
           <div class="flex items-center">
             <input
               :checked="modelValue.partial"
-              @change.prevent="
-                () =>
-                  $emit('update:model-value', {
-                    ...modelValue,
-                    partial: !modelValue.partial
-                  })
-              "
               type="checkbox"
               value=""
               class="h-4 w-4 rounded border-gray-300 bg-gray-100 text-amber-600 focus:ring-2 focus:ring-amber-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-amber-600"
@@ -73,17 +76,18 @@ onMounted(() => {
           </div>
         </li>
 
-        <li>
+        <li
+          @click="
+            () =>
+              $emit('update:model-value', {
+                ...modelValue,
+                completed: !modelValue.completed
+              })
+          "
+        >
           <div class="flex items-center">
             <input
               :checked="modelValue.completed"
-              @change.prevent="
-                () =>
-                  $emit('update:model-value', {
-                    ...modelValue,
-                    completed: !modelValue.completed
-                  })
-              "
               type="checkbox"
               value=""
               class="h-4 w-4 rounded border-gray-300 bg-gray-100 text-green-600 focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-green-600"
@@ -98,12 +102,7 @@ onMounted(() => {
 
         <li>
           <div class="flex items-center">
-            <input
-              checked
-              type="checkbox"
-              value=""
-              class="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
-            />
+            <InfoIcon />
             <label
               for="checked-checkbox"
               class="text-md ml-2 font-medium text-gray-900 dark:text-gray-300"
