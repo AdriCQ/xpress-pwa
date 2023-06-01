@@ -13,56 +13,62 @@ const $store = useStore()
 const user = computed(() => $store.user)
 
 function checkUser() {
-  if (!user.value || !user.value.usuarioId) {
-    void $router.push({ name: ROUTE_NAME.AUTH_LOGIN })
-    return false
-  }
-  return true
+	if (!user.value || !user.value.usuarioId) {
+		void $router.push({ name: ROUTE_NAME.AUTH_LOGIN })
+		return false
+	}
+	return true
 }
 
 /**
  * preloadData
  */
 async function preloadData() {
-  if (user.value) {
-    $store.loading = true
-    try {
-      const gerenciasResp = await getGerencies(user.value.usuario)
+	if (user.value) {
+		$store.loading = true
+		try {
+			const gerenciasResp = await getGerencies(user.value.usuario)
 
-      $store.gerencias = gerenciasResp.data
-      $store.gerenciaSelected = $store.gerencias[0]
+			$store.gerencias = gerenciasResp.data
+			if ($store.gerencias.length) {
+				$store.gerenciaSelected = $store.gerencias[0]
 
-      const agenciesResp = await getAgencies($store.gerenciaSelected)
-      $store.agencies = agenciesResp.data
-      $store.agencySelected = $store.agencies[0]
+				const agenciesResp = await getAgencies($store.gerenciaSelected)
+				$store.agencies = agenciesResp.data
 
-      const dateResp = await getCurrentDate()
-      $store.currentDate = {
-        week: dateResp.data.semana,
-        year: dateResp.data.anio
-      }
-      console.log({ currentDate: $store.currentDate })
+				if ($store.agencies.length) {
+					$store.agencySelected = $store.agencies[0]
 
-      const cobranzaResp = await getCobranza({
-        agency: $store.agencySelected,
-        week: $store.currentDate.week,
-        year: $store.currentDate.year
-      })
+					const dateResp = await getCurrentDate()
+					$store.currentDate = {
+						week: dateResp.data.semana,
+						year: dateResp.data.anio
+					}
+					console.log({ currentDate: $store.currentDate })
 
-      $store.cobranzas = cobranzaResp.data.cobranza
-      $store.cobranzaSelected = $store.cobranzas[0]
-    } catch (error) {
-      console.log({ preloadError: error })
-    }
-    $store.loading = false
-  }
+					const cobranzaResp = await getCobranza({
+						agency: $store.agencySelected,
+						week: $store.currentDate.week,
+						year: $store.currentDate.year
+					})
+
+					$store.cobranzas = cobranzaResp.data.cobranza
+					if ($store.cobranzas.length)
+						$store.cobranzaSelected = $store.cobranzas[0]
+				}
+			}
+		} catch (error) {
+			console.log({ preloadError: error })
+		}
+		$store.loading = false
+	}
 }
 
 onBeforeMount(async () => {
-  if (checkUser()) await preloadData()
+	if (checkUser()) await preloadData()
 })
 </script>
 
 <template>
-  <RouterView />
+	<RouterView />
 </template>
