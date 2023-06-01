@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { toCurrency } from '@/helpers'
 import { ROUTE_NAME } from '@/router'
 import { useStore } from '@/stores'
 
@@ -39,9 +40,9 @@ function goToHome() {
 						</span></p>
 				</div>
 				<div class="mt-6">
-					<p>Débito Miércoles: <span class="font-bold">{{ agency.debitoMiercoles }}</span></p>
-					<p>Débito Jueves: <span class="font-bold">{{ agency.debitoJueves }}</span></p>
-					<p>Débito Total: <span class="font-bold">{{ agency.debitoTotal }}</span></p>
+					<p>Débito Miércoles: <span class="font-bold">{{ toCurrency(agency.debitoMiercoles) }}</span></p>
+					<p>Débito Jueves: <span class="font-bold">{{ toCurrency(agency.debitoJueves) }}</span></p>
+					<p>Débito Total: <span class="font-bold">{{ toCurrency(agency.debitoTotal) }}</span></p>
 				</div>
 
 				<div class="mt-6">
@@ -50,11 +51,11 @@ function goToHome() {
 				</div>
 
 				<div class="mt-6">
-					<p>Cobranza Pura: <span class="font-bold">{{ agency.totalCobranzaPura }}</span></p>
-					<p>Excedentes: <span class="font-bold">{{ agency.montoExcedente }}</span></p>
-					<p>Multas: <span class="font-bold">{{ agency.multas }}</span></p>
-					<p>Liquidaciones: <span class="font-bold">{{ agency.liquidaciones }}</span></p>
-					<p>Cobranza total: <span class="font-bold">{{ agency.cobranzaTotal }}</span></p>
+					<p>Cobranza Pura: <span class="font-bold">{{ toCurrency(agency.totalCobranzaPura) }}</span></p>
+					<p>Excedentes: <span class="font-bold">{{ toCurrency(agency.montoExcedente) }}</span></p>
+					<p>Multas: <span class="font-bold">{{ toCurrency(agency.multas ?? 0) }}</span></p>
+					<p>Liquidaciones: <span class="font-bold">{{ toCurrency(agency.liquidaciones) }}</span></p>
+					<p>Cobranza total: <span class="font-bold">{{ toCurrency(agency.cobranzaTotal) }}</span></p>
 				</div>
 			</div>
 
