@@ -33,6 +33,13 @@ async function selectGerency(gerency: string) {
 			$store.cobranzas = cobranzaResp.data.cobranza
 			if ($store.cobranzas.length)
 				$store.cobranzaSelected = $store.cobranzas[0]
+
+			const agencyResp = await $service.getAgency({
+				agency: $store.agencySelected,
+				week: currentDate.value.week,
+				year: currentDate.value.year
+			})
+			$store.agencyData = agencyResp.data
 		}
 	} catch (error) {
 		console.log({ error })

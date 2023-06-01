@@ -5,7 +5,7 @@ import { ROUTE_NAME } from '@/router'
 import useService from '@/services'
 import { useStore } from '@/stores'
 
-const { getAgencies, getCobranza, getCurrentDate, getGerencies } = useService()
+const { getAgencies, getAgency, getCobranza, getCurrentDate, getGerencies } = useService()
 
 const $router = useRouter()
 const $store = useStore()
@@ -55,6 +55,14 @@ async function preloadData() {
 					$store.cobranzas = cobranzaResp.data.cobranza
 					if ($store.cobranzas.length)
 						$store.cobranzaSelected = $store.cobranzas[0]
+
+					const agencyResp = await getAgency({
+						agency: $store.agencySelected,
+						week: $store.currentDate.week,
+						year: $store.currentDate.year
+					})
+
+					$store.agencyData = agencyResp.data
 				}
 			}
 		} catch (error) {
