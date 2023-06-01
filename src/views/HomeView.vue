@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, defineAsyncComponent, ref } from 'vue'
-import { getDateYearAndWeek } from '@/helpers'
 import { useStore } from '@/stores'
 import useService from '@/services'
 import type { ModelValue as FloatButtonModel } from '@/components/widgets/FloatButton.vue'
@@ -31,6 +30,8 @@ const $store = useStore()
  */
 
 const agencies = computed(() => $store.agencies)
+const agencySelected = computed(() => $store.agencySelected)
+
 const cobranzas = computed(() => {
   let response = $store.cobranzas
   if (!filterCheck.value.completed) {
@@ -53,13 +54,14 @@ const cobranzas = computed(() => {
   }
   return response
 })
+
+const currentDate = computed(() => $store.currentDate)
 const filterCheck = ref<FloatButtonModel>({
   completed: true,
   partial: true,
   pending: true
 })
 const loading = ref<boolean>(false)
-const selectedAgency = computed(() => $store.selectedAgency)
 const searchForm = ref<string>()
 
 /**
@@ -69,11 +71,10 @@ async function loadAgency() {
   loading.value = true
   searchForm.value = undefined
   $store.cobranzas = []
-  const { week, year } = getDateYearAndWeek()
   const resp = await $service.getCobranza({
-    agent: selectedAgency.value as string,
-    week,
-    year
+    agency: agencySelected.value as string,
+    week: currentDate.value.week,
+    year: currentDate.value.year
   })
   $store.cobranzas = resp.data.cobranza
   loading.value = false
