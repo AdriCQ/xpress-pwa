@@ -10,7 +10,6 @@ const { getAgencies, getCobranza, getCurrentDate, getGerencies } = useService()
 const $router = useRouter()
 const $store = useStore()
 
-const currentDate = computed(() => $store.currentDate)
 const user = computed(() => $store.user)
 
 function checkUser() {
@@ -26,6 +25,7 @@ function checkUser() {
  */
 async function preloadData() {
 	if (user.value) {
+		$store.loading = true
 		try {
 			const gerenciasResp = await getGerencies(user.value.usuario)
 
@@ -36,18 +36,6 @@ async function preloadData() {
 			$store.agencies = agenciesResp.data
 			$store.agencySelected = $store.agencies[0]
 
-			const cobranzaResp = await getCobranza({
-				agency: $store.agencySelected,
-				week: currentDate.value.week,
-				year: currentDate.value.year
-			})
-
-			$store.cobranzas = cobranzaResp.data.cobranza
-			console.log({
-				cobranzaResp,
-				agenciesResp,
-				agencySelected: $store.agencySelected
-			})
 
 			const dateResp = await getCurrentDate()
 			$store.currentDate = {
@@ -55,9 +43,19 @@ async function preloadData() {
 				year: dateResp.data.anio
 			}
 			console.log({ currentDate: $store.currentDate })
+
+			const cobranzaResp = await getCobranza({
+				agency: $store.agencySelected,
+				week: $store.currentDate.week,
+				year: $store.currentDate.year
+			})
+
+			$store.cobranzas = cobranzaResp.data.cobranza
+			$store.cobranzaSelected = $store.cobranzas[0]
 		} catch (error) {
 			console.log({ preloadError: error })
 		}
+		$store.loading = false
 	}
 }
 

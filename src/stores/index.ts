@@ -21,6 +21,7 @@ export const useStore = defineStore(STORE_NAME, () => {
 	})
 	const gerencias = ref<string[]>([])
 	const gerenciaSelected = ref<string>()
+	const loading = ref<boolean>(false)
 	const user = ref<User>()
 
 
@@ -45,6 +46,7 @@ export const useStore = defineStore(STORE_NAME, () => {
 		currentDate,
 		gerencias,
 		gerenciaSelected,
+		loading,
 		user,
 		// Methods
 		loadData,
