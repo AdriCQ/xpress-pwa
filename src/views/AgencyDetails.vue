@@ -30,15 +30,16 @@ function goToHome() {
 			<div class="p-6 text-slate-700">
 				<div class="">
 					<p>Agencia: <span class="font-bold">{{ agency.agencia }}</span></p>
-					<p>Nivel: <span class="font-bold">???</span></p>
+					<!-- <p>Nivel: <span class="font-bold">???</span></p> -->
 					<p>No. Clientes: <span class="font-bold">{{ agency.clientes }}</span></p>
-					<p>No. Liquidaciones: <span class="font-bold">45</span>{{ agency.noPagos }}</p>
+					<!-- <p>No. Clientes Cobrados: <span class="font-bold">{{ agency.clientesCobrados }}</span></p> -->
+					<p>No. Liquidaciones: <span class="font-bold">45</span>{{ agency.numeroLiquidaciones }}</p>
 					<p>Reducidos: <span class="font-bold">
 							{{ agency.pagosReducidos }}
 						</span></p>
 				</div>
 				<div class="mt-6">
-					<p>Débito Miércoles: <span class="font-bold">{{ agency.rendimiento }}</span></p>
+					<p>Débito Miércoles: <span class="font-bold">{{ agency.debitoMiercoles }}</span></p>
 					<p>Débito Jueves: <span class="font-bold">{{ agency.debitoJueves }}</span></p>
 					<p>Débito Total: <span class="font-bold">{{ agency.debitoTotal }}</span></p>
 				</div>
@@ -49,7 +50,7 @@ function goToHome() {
 				</div>
 
 				<div class="mt-6">
-					<p>Cobranza Pura: <span class="font-bold">{{ agency.cobranzaTotal }}</span></p>
+					<p>Cobranza Pura: <span class="font-bold">{{ agency.totalCobranzaPura }}</span></p>
 					<p>Excedentes: <span class="font-bold">{{ agency.montoExcedente }}</span></p>
 					<p>Multas: <span class="font-bold">{{ agency.multas }}</span></p>
 					<p>Liquidaciones: <span class="font-bold">{{ agency.liquidaciones }}</span></p>
