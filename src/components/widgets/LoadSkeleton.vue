@@ -5,7 +5,7 @@ defineProps<{ items: number }>()
 <template>
   <div
     role="status"
-    class="max-w-md animate-pulse space-y-4 divide-y divide-gray-200 rounded border border-gray-200 p-4 shadow dark:divide-gray-700 dark:border-gray-700 md:p-6"
+    class="animate-pulse space-y-4 divide-y divide-gray-200 rounded border border-gray-200 p-4 shadow dark:divide-gray-700 dark:border-gray-700 md:p-6"
   >
     <div class="flex items-center justify-between">
       <div>

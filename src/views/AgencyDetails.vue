@@ -22,7 +22,7 @@ function goToHome() {
   <main class="p-2">
     <div
       v-if="agency"
-      class="block max-w-sm rounded-lg border border-gray-200 bg-white shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
+      class="block rounded-lg border border-gray-200 bg-white shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
     >
       <div class="border-b-[1px] px-6 pb-2 pt-6">
         <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-800 dark:text-white">
