@@ -50,7 +50,7 @@ interface GetCobranzaProps {
   week: number
 }
 
-export type CobranzaStatus = 'Completado' | 'Parcial' | 'Pendiente'
+export type CobranzaStatus = 'Completado' | 'Parcial' | 'Desfase' | 'Pendiente'
 
 export interface Cobranza {
   nombre: string

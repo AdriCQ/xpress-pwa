@@ -12,10 +12,10 @@ const iconStyle = computed(() => {
   switch ($props.cobranza.status) {
     case 'Completado':
       return 'text-green-500 dark:text-green-400'
-    case 'Parcial':
-      return 'text-amber-500 dark:text-amber-400'
-    default:
+    case 'Pendiente':
       return 'text-red-500 dark:text-red-400'
+    default:
+      return 'text-amber-500 dark:text-amber-400'
   }
 })
 </script>
