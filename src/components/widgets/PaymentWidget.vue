@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, defineAsyncComponent } from 'vue'
 import { toCurrency } from '@/helpers'
-import type { Cobranza } from '@/services'
+import type { Cobranza } from '@/types'
 
 const $props = defineProps<{
   cobranza: Cobranza

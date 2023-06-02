@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import type { AuthLogin } from '@/services'
-import useService from '@/services'
-import { useStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import { ROUTE_NAME } from '@/router'
+import useService from '@/services'
+import { useStore } from '@/stores'
+import type { AuthLogin } from '@/types'
 
 const $router = useRouter()
 const $store = useStore()
@@ -20,6 +20,9 @@ async function onSubmit() {
     const resp = await $service.authLogin(form.value)
     $store.user = resp.data
     $store.saveData()
+    console.log({
+      user: $store.user
+    })
     $router.push({ name: ROUTE_NAME.DASHBOARD_HOME })
   } catch (error) {
     console.log({
@@ -34,9 +37,9 @@ async function onSubmit() {
     <section class="bg-gray-50 dark:bg-gray-900">
       <div class="mx-auto flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0">
         <!-- <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-																			<img class="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo">
-																										Flowbite
-																									</a> -->
+																					<img class="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo">
+																												Flowbite
+																											</a> -->
         <div
           class="w-full rounded-lg bg-white shadow dark:border dark:border-gray-700 dark:bg-gray-800 sm:max-w-md md:mt-0 xl:p-0"
         >
