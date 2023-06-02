@@ -63,9 +63,9 @@ const filterCheck = ref<FloatButtonModel>({
   pending: true
 })
 const gerencias = computed(() => $store.gerencias)
-const gerenciaSelected = computed(() => $store.gerenciaSelected)
 const loading = computed(() => $store.loading)
 const searchForm = ref<string>()
+const userType = computed(() => $store.user?.tipo)
 
 /**
  * loadAgency
@@ -100,7 +100,7 @@ async function loadAgency() {
 <template>
   <main class="min-h-screen p-2">
     <div class="sticky top-0 z-10 w-full bg-white p-2">
-      <GerencySlider :gerencias="gerencias" />
+      <GerencySlider v-if="userType === 'Seguridad'" :gerencias="gerencias" />
       <SearchForm v-model="searchForm" />
     </div>
     <LoadSkeleton :items="5" v-if="loading" class="mt-4 px-2" />

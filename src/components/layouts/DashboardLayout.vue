@@ -27,12 +27,15 @@ async function preloadData() {
   if (user.value) {
     $store.loading = true
     try {
-      const gerenciasResp = await getGerencies(user.value.usuario)
-
-      $store.gerencias = gerenciasResp.data
-      if ($store.gerencias.length) {
+      if (user.value.tipo === 'Seguridad') {
+        const gerenciasResp = await getGerencies(user.value.usuario)
+        $store.gerencias = gerenciasResp.data
         $store.gerenciaSelected = $store.gerencias[0]
+      } else {
+        $store.gerenciaSelected = user.value.gerencia
+      }
 
+      if ($store.gerenciaSelected) {
         const agenciesResp = await getAgencies($store.gerenciaSelected)
         $store.agencies = agenciesResp.data
 
